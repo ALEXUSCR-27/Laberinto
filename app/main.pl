@@ -5,6 +5,7 @@ aMovimiento(ar) :-
     Y is J,
 	NuevoX is X - 1,
     retractall(posicion(_,_)),
+    verificarMovimiento(NuevoX, Y),
     asserta(posicion(NuevoX, Y)).
 
 % Abajo
@@ -14,6 +15,7 @@ aMovimiento(ab) :-
     Y is J,
 	NuevoX is X + 1,
     retractall(posicion(_,_)),
+    verificarMovimiento(NuevoX, Y),
     asserta(posicion(NuevoX, Y)).
 
 % Izquierda
@@ -23,6 +25,7 @@ aMovimiento(at) :-
     Y is J,
 	NuevoY is Y - 1,
     retractall(posicion(_,_)),
+    verificarMovimiento(X, NuevoY),
     asserta(posicion(X, NuevoY)).
 
 % Derecha
@@ -32,13 +35,14 @@ aMovimiento(ad) :-
     Y is J,
 	NuevoY is Y + 1,
     retractall(posicion(_,_)),
+    verificarMovimiento(X, NuevoY),
     asserta(posicion(X, NuevoY)).
 
-verificarMovimiento(mov(X,Y)) :-
+verificarMovimiento(X, Y) :- 
     X >=0, 
     Y >=0.
 
-main :- retractall(fila(_)), retractall(posicion(_,_)), leerArchivo, buscarInicio.
+main :- retractall(fila(_)), retractall(posicion(_,_)), leerArchivo, buscarInicio, movimiento.
 
 leerArchivo:-
     write("Ingrese la ubicacion del archivo: "),
@@ -55,7 +59,16 @@ obtenerLaberinto(Stream,[X|L]) :-
     read(Stream,X),
     obtenerLaberinto(Stream,L).
 
-movimiento :- write("donde: "), read(M), aMovimiento(M).
+movimiento :- write("donde: "), read(M), aMovimiento(M), ubicarJugador.
+
+ubicarJugador :- posicion(I, J), matriz([A|B]), I =\= 0, R is 1, ubicarJugadorI(R, B).
+ubicarJugador :- posicion(I, J), matriz([A|B]), I == 0, R is 0, ubicarJugador3(R, A).
+
+ubicarJugadorI(X, [A|B]) :- posicion(I, J), X == I, R is 0, ubicarJugadorJ(R, A).
+ubicarJugadorI(X, [A|B]) :- posicion(I, J), X =\= I, R is X+1, ubicarJugadorI(R, B).
+
+ubicarJugadorJ(X, [A|B]) :- posicion(I, J), X == J, write(A), nl, movimiento. 
+ubicarJugadorJ(X, [A|B]) :- posicion(I, J), X =\= J, R is X+1, ubicarJugadorJ(R, B). 
 
 
 buscarInicio :- matriz([A|B]), member(i, A), I is 0, J is 0, asserta(posicion(I, J)).

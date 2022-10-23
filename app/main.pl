@@ -4,8 +4,14 @@ aMovimiento(ar) :-
     X is I,
     Y is J,
 	NuevoX is X - 1,
-    retractall(posicion(_,_)),
     verificarMovimiento(NuevoX, Y),
+
+    retractall(posicionAnt(_,_)),
+    retractall(posicion(_,_)),
+    retractall(mov(_)),
+
+    asserta(posicionAnt(X, Y)),
+    asserta(mov(ar)),
     asserta(posicion(NuevoX, Y)).
 
 % Abajo
@@ -14,8 +20,14 @@ aMovimiento(ab) :-
     X is I,
     Y is J,
 	NuevoX is X + 1,
-    retractall(posicion(_,_)),
     verificarMovimiento(NuevoX, Y),
+
+    retractall(posicionAnt(_,_)),
+    retractall(posicion(_,_)),
+    retractall(mov(_)),
+
+    asserta(posicionAnt(X, Y)),
+    asserta(mov(ab)),
     asserta(posicion(NuevoX, Y)).
 
 % Izquierda
@@ -24,8 +36,14 @@ aMovimiento(at) :-
     X is I,
     Y is J,
 	NuevoY is Y - 1,
-    retractall(posicion(_,_)),
     verificarMovimiento(X, NuevoY),
+
+    retractall(posicionAnt(_,_)),
+    retractall(posicion(_,_)),
+    retractall(mov(_)),
+
+    asserta(posicionAnt(X, Y)),
+    asserta(mov(at)),
     asserta(posicion(X, NuevoY)).
 
 % Derecha
@@ -34,8 +52,14 @@ aMovimiento(ad) :-
     X is I,
     Y is J,
 	NuevoY is Y + 1,
-    retractall(posicion(_,_)),
     verificarMovimiento(X, NuevoY),
+
+    retractall(posicionAnt(_,_)),
+    retractall(posicion(_,_)),
+    retractall(mov(_)),
+
+    asserta(posicionAnt(X, Y)),
+    asserta(mov(ad)),
     asserta(posicion(X, NuevoY)).
 
 verificarMovimiento(X, Y) :- 
@@ -59,6 +83,15 @@ obtenerLaberinto(Stream,[X|L]) :-
     read(Stream,X),
     obtenerLaberinto(Stream,L).
 
+buscarInicio :- matriz([A|B]), member(i, A), I is 0, J is 0, asserta(posicion(I, J)), asserta(posicionAnt(I, J)).
+buscarInicio :- matriz([A|B]), not(member(i, A)), I is 1, J is 0, buscarInicio2(B, I, J).
+
+buscarInicio2([A|B], I, J) :- member(i, A), buscarInicio3(A, I, J).
+buscarInicio2([A|B], I, J) :- not(member(i, A)), R is I+1, buscarInicio2(B, R, J).
+
+buscarInicio3([A|B], I, J) :- A == i, asserta(posicion(I, J)), asserta(posicionAnt(I, J)).
+buscarInicio3([A|B], I, J) :- A =\= i, R is J+1, buscarInicio3(B, I, R).
+
 movimiento :- write("donde: "), read(M), aMovimiento(M), ubicarJugador.
 
 ubicarJugador :- posicion(I, J), matriz([A|B]), I =\= 0, R is 1, ubicarJugadorI(R, B).
@@ -67,20 +100,16 @@ ubicarJugador :- posicion(I, J), matriz([A|B]), I == 0, R is 0, ubicarJugador3(R
 ubicarJugadorI(X, [A|B]) :- posicion(I, J), X == I, R is 0, ubicarJugadorJ(R, A).
 ubicarJugadorI(X, [A|B]) :- posicion(I, J), X =\= I, R is X+1, ubicarJugadorI(R, B).
 
-ubicarJugadorJ(X, [A|B]) :- posicion(I, J), X == J, write(A), nl, movimiento. 
+ubicarJugadorJ(X, [A|B]) :- posicion(I, J), X == J, write(I), nl , write(J), verificarPosicion(A), movimiento. 
 ubicarJugadorJ(X, [A|B]) :- posicion(I, J), X =\= J, R is X+1, ubicarJugadorJ(R, B). 
 
-
-buscarInicio :- matriz([A|B]), member(i, A), I is 0, J is 0, asserta(posicion(I, J)).
-buscarInicio :- matriz([A|B]), not(member(i, A)), I is 1, J is 0, buscarInicio2(B, I, J).
-
-buscarInicio2([A|B], I, J) :- member(i, A), buscarInicio3(A, I, J).
-buscarInicio2([A|B], I, J) :- not(member(i, A)), R is I+1, buscarInicio2(B, R, J).
-
-buscarInicio3([A|B], I, J) :- A == i, asserta(posicion(I, J)).
-buscarInicio3([A|B], I, J) :- A =\= i, R is J+1, buscarInicio3(B, I, R).
+verificarPosicion(C) :- write(C), nl,  mov(T), C == T ; C == inter, write("si"), nl.
+verificarPosicion(C) :- write(C), nl,  C == f, write("termino"), nl.
+verificarPosicion(C) :- mov(T), write(C),nl, C == x ; not(C == T), write("no"), nl ,posicionAnt(X_a, Y_a), posicion(X, Y), retractall(posicion(_,_)), asserta(posicion(X_a, Y_a)).
 
 
+probar :- read(T), T == a, write("si").
+p2(R) :- R == 2 , R == 1, write("si"). 
 im :- matriz([A|B]), member(i, A).
 im2([A|B]) :- write(A),nl, im2(B).
 im2([]).

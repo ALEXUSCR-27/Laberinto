@@ -1,3 +1,4 @@
+:- style_check(-singleton).
 % Arriba
 aMovimiento(ar) :-
     posicion(I, J),
@@ -66,22 +67,22 @@ verificarMovimiento(X, Y) :-
     X >=0, 
     Y >=0.
 
-main :- retractall(fila(_)), retractall(posicion(_,_)), leerArchivo, buscarInicio, movimiento.
+main :- retractall(fila(_)), retractall(posicion(_,_)), leerArchivo('T:/2022/S2/LENGUAJES DE PROGRAMACION/PRY3/Laberinto/src/matriz.txt').%, buscarInicio, movimiento.
 
-leerArchivo:-
-    write("Ingrese la ubicacion del archivo: "),
-    read(M),
+leerArchivo(M) :-
     open(M,read,Str),
-    obtenerLaberinto(Str,Matriz),
+    obtenerLaberinto(Str,Matriz, _),
     close(Str),
     asserta(matriz(Matriz)).
+devolverMatriz(X) :- matriz(X).
    
-obtenerLaberinto(Stream,[]) :-
-   at_end_of_stream(Stream).
+obtenerLaberinto(_,[], R) :-
+   R == end_of_file,
+   !. % Green Cut at the end of the file
    
-obtenerLaberinto(Stream,[X|L]) :-
+obtenerLaberinto(Stream,[X|L], R) :-
     read(Stream,X),
-    obtenerLaberinto(Stream,L).
+    obtenerLaberinto(Stream,L, X).
 
 buscarInicio :- matriz([A|B]), member(i, A), I is 0, J is 0, asserta(posicion(I, J)), asserta(posicionAnt(I, J)).
 buscarInicio :- matriz([A|B]), not(member(i, A)), I is 1, J is 0, buscarInicio2(B, I, J).
@@ -108,7 +109,7 @@ verificarPosicion(C) :- write(C), nl,  C == f, write("termino"), nl.
 verificarPosicion(C) :- mov(T), write(C),nl, C == x ; not(C == T), write("no"), nl ,posicionAnt(X_a, Y_a), posicion(X, Y), retractall(posicion(_,_)), asserta(posicion(X_a, Y_a)).
 
 
-probar :- read(T), T == a, write("si").
+probar(X) :-  X is 1.
 p2(R) :- R == 2 , R == 1, write("si"). 
 im :- matriz([A|B]), member(i, A).
 im2([A|B]) :- write(A),nl, im2(B).

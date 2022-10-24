@@ -74,6 +74,7 @@ leerArchivo(M) :-
     obtenerLaberinto(Str,Matriz, _),
     close(Str),
     asserta(matriz(Matriz)).
+    
 devolverMatriz(X) :- matriz(X).
    
 obtenerLaberinto(_,[], R) :-

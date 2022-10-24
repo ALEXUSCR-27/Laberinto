@@ -4,11 +4,9 @@
  */
 package app;
 
-import org.jpl7.Atom;
-import org.jpl7.Query;
-import org.jpl7.Term;
-import org.jpl7.Variable;
+import javax.swing.JDialog;
 import vista.VentanaInicio;
+import modelo.Modelo;
 
 /**
  *
@@ -20,8 +18,12 @@ public class Laberinto {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        Modelo modelo = new Modelo();
+        
+        modelo.ConectarPL();
         VentanaInicio ventanaInicio = new VentanaInicio();
         ventanaInicio.setVisible(true);
+
         /*
         
         Query q1 = new Query( "consult", new Term[] {new Atom("C:\\Users\\asmal\\eclipse-workspace\\Prueba2\\src\\prueba.pl")} );

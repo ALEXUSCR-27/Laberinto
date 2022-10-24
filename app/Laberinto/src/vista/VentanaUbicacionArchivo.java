@@ -1,6 +1,9 @@
 
 package vista;
 
+import java.util.Map;
+import javax.swing.JDialog;
+import modelo.Modelo;
 import org.jpl7.Atom;
 import org.jpl7.Query;
 import org.jpl7.Term;
@@ -15,7 +18,8 @@ public class VentanaUbicacionArchivo extends javax.swing.JFrame {
     /**
      * Constructor de la clase VentasnaUbicacionArchivo
      */
-    
+    Modelo modelo = new Modelo();
+    JDialog Aviso = new JDialog();
     
     public VentanaUbicacionArchivo() {
         initComponents();
@@ -91,18 +95,11 @@ public class VentanaUbicacionArchivo extends javax.swing.JFrame {
     
     private void BuscarArchivo() {
         String direccion = inputArchivo.getText();
-        Query conectar = new Query( "consult", new Term[] {new Atom("T:\\2022\\S2\\LENGUAJES DE PROGRAMACION\\PRY3\\Laberinto\\app\\main.pl")} );
-        System.out.println( "consult " + (conectar.hasSolution() ? "succeeded" : "failed"));
+        Map<String,Term> matriz = modelo.BuscarArchivo(direccion);
+        System.out.println(matriz.get("X"));
         
-        Query q3 = new Query("leerArchivo", new Term[]{new Atom(direccion)});
-        System.out.println(q3.hasSolution());
         
-        Variable X = new Variable("X");
        
-        Query q2 = new Query("devolverMatriz", new Term[] {X});
-        java.util.Map<String,Term> solution;
-        solution = q2.oneSolution();
-	System.out.println( "X = " + solution.get("X"));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

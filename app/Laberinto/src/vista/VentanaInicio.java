@@ -6,6 +6,8 @@ package vista;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import javax.swing.JDialog;
+
 
 /**
  *
@@ -16,9 +18,11 @@ public class VentanaInicio extends javax.swing.JFrame {
     /**
      * Creates new form VentanaInicio
      */
+    
     public VentanaInicio() {
         initComponents();
         this.setExtendedState(this.MAXIMIZED_BOTH);
+        
     }
 
     /**

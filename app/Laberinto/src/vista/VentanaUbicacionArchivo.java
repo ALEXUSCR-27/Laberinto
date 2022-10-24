@@ -1,6 +1,11 @@
 
 package vista;
 
+import org.jpl7.Atom;
+import org.jpl7.Query;
+import org.jpl7.Term;
+import org.jpl7.Variable;
+
 /**
  *
  * @author Alex Sanchez Cespedes
@@ -81,9 +86,24 @@ public class VentanaUbicacionArchivo extends javax.swing.JFrame {
     }//GEN-LAST:event_inputArchivoActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        System.out.println(inputArchivo.getText());
+        BuscarArchivo();
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    
+    private void BuscarArchivo() {
+        String direccion = inputArchivo.getText();
+        Query conectar = new Query( "consult", new Term[] {new Atom("T:\\2022\\S2\\LENGUAJES DE PROGRAMACION\\PRY3\\Laberinto\\app\\main.pl")} );
+        System.out.println( "consult " + (conectar.hasSolution() ? "succeeded" : "failed"));
+        
+        Query q3 = new Query("leerArchivo", new Term[]{new Atom(direccion)});
+        System.out.println(q3.hasSolution());
+        
+        Variable X = new Variable("X");
+       
+        Query q2 = new Query("devolverMatriz", new Term[] {X});
+        java.util.Map<String,Term> solution;
+        solution = q2.oneSolution();
+	System.out.println( "X = " + solution.get("X"));
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField inputArchivo;

@@ -1,8 +1,11 @@
 
 package vista;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import modelo.Modelo;
 import org.jpl7.Atom;
 import org.jpl7.Query;
@@ -14,14 +17,12 @@ import org.jpl7.Variable;
  * @author Alex Sanchez Cespedes
  */
 public class VentanaUbicacionArchivo extends javax.swing.JFrame {
-
+    Modelo pModelo;
     /**
      * Constructor de la clase VentasnaUbicacionArchivo
      */
-    Modelo modelo = new Modelo();
-    JDialog Aviso = new JDialog();
-    
-    public VentanaUbicacionArchivo() {
+    public VentanaUbicacionArchivo(Modelo modelo) {
+        pModelo = modelo;
         initComponents();
     }
 
@@ -95,9 +96,12 @@ public class VentanaUbicacionArchivo extends javax.swing.JFrame {
     
     private void BuscarArchivo() {
         String direccion = inputArchivo.getText();
-        Map<String,Term> matriz = modelo.BuscarArchivo(direccion);
-        System.out.println(matriz.get("X"));
+        pModelo.BuscarArchivo(direccion);
         
+        VentanaJuego juego = new VentanaJuego(pModelo);
+        juego.setVisible(true);
+        this.dispose();
+         
         
        
     }

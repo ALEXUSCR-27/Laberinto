@@ -4,9 +4,17 @@
  */
 package vista;
 
+import java.awt.Color;
+import java.awt.ComponentOrientation;
+import java.awt.GridLayout;
 import java.util.ArrayList;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 import modelo.Modelo;
+import org.jpl7.Atom;
 import org.jpl7.Term;
 
 /**
@@ -18,6 +26,7 @@ public class VentanaJuego extends javax.swing.JFrame {
     Modelo pModelo;
     int x;
     int y;
+    Atom[] listaValores = {new Atom("i"), new Atom("x"), new Atom("f"), new Atom("ad"), new Atom("at"), new Atom("ab"), new Atom("ar"), new Atom("inter")};
     /**
      * Creates new form VentanaJuego
      */
@@ -29,19 +38,25 @@ public class VentanaJuego extends javax.swing.JFrame {
         matrizMadre = pModelo.GetMatrizMadre();
         x = pModelo.GetX();
         y = pModelo.GetY();
-        /*ArrayList<JLabel> labelArray;
+        panelJuego.setLayout(new GridLayout(x, y));
+        ArrayList<JLabel> labelArray = new ArrayList<>() ;
         for (int i = 0;i!=x;i++) {
             for (int j = 0;j!=y;j++) {
-                if(matrizMadre[i][j].equals(listaValores[1])) {
-                    JLabel label = new JLabel();
-                    label.setSize(50, 50);
-                    labelArray.add(label);
-                    
+                JLabel label = new JLabel();
+                if(matrizMadre[i][j].equals(listaValores[1])){
+                    label.setIcon(new ImageIcon(getClass().getResource("/assets/bolck4.png")));
                 }
-                else {System.out.print(" ");}
+                else if (matrizMadre[i][j].equals(listaValores[0])) {
+                    label.setIcon(new ImageIcon(getClass().getResource("/assets/playerInicio.png")));
+                }
+                else {
+                    label.setIcon(new ImageIcon(getClass().getResource("/assets/piso.png")));
+                }
+                labelArray.add(label);
+                panelJuego.add(label);
             }
             System.out.print("\n");
-        }*/
+        }
     }
 
     /**
@@ -53,46 +68,49 @@ public class VentanaJuego extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        panelJuego = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1920, 1100));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(1920, 1100));
         setResizable(false);
         setSize(new java.awt.Dimension(1920, 1100));
-        getContentPane().setLayout(new java.awt.GridLayout());
 
-        jPanel1.setPreferredSize(new java.awt.Dimension(1920, 1100));
+        jPanel2.setPreferredSize(new java.awt.Dimension(1920, 1100));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fondo5.jpg"))); // NOI18N
-        jLabel1.setPreferredSize(new java.awt.Dimension(1920, 1100));
+        panelJuego.setBackground(new java.awt.Color(0, 0, 0));
+        panelJuego.setAlignmentX(0.0F);
+        panelJuego.setAlignmentY(0.0F);
+        panelJuego.setAutoscrolls(true);
+        panelJuego.setPreferredSize(new java.awt.Dimension(880, 970));
+        panelJuego.setLayout(new java.awt.GridBagLayout());
+        jPanel2.add(panelJuego, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 60, -1, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fondo5.jpg"))); // NOI18N
+        jLabel2.setPreferredSize(new java.awt.Dimension(1980, 1100));
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
-
-        getContentPane().add(jPanel1);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel panelJuego;
     // End of variables declaration//GEN-END:variables
 }

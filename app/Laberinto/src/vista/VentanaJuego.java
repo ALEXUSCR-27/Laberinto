@@ -1,13 +1,14 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package vista;
 
 import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.awt.GridLayout;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -15,50 +16,80 @@ import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import modelo.Modelo;
 import org.jpl7.Atom;
+import org.jpl7.Query;
 import org.jpl7.Term;
+import org.jpl7.Variable;
 
 /**
  *
  * @author asmal
  */
-public class VentanaJuego extends javax.swing.JFrame {
+public class VentanaJuego extends javax.swing.JFrame implements KeyListener{
     private Term[][] matrizMadre;
     Modelo pModelo;
     int x;
     int y;
     Atom[] listaValores = {new Atom("i"), new Atom("x"), new Atom("f"), new Atom("ad"), new Atom("at"), new Atom("ab"), new Atom("ar"), new Atom("inter")};
+    ArrayList<JLabel> labelArray = new ArrayList<>();
+    JLabel[][] matrizLabels;
+    int posX;
+    int posY;
+    
+    private final ImageIcon bloque = new ImageIcon(getClass().getResource("/assets/bolck4.png"));
+    private final ImageIcon suelo = new ImageIcon(getClass().getResource("/assets/piso.png"));
+    private final ImageIcon meta = new ImageIcon(getClass().getResource("/assets/final.png"));
+    private final ImageIcon inicio = new ImageIcon(getClass().getResource("/assets/playerInicio.png"));
+    private final ImageIcon abajo = new ImageIcon(getClass().getResource("/assets/playerDown.png"));
+    private final ImageIcon arriba = new ImageIcon(getClass().getResource("/assets/playerUp.png"));
+    private final ImageIcon izquierda = new ImageIcon(getClass().getResource("/assets/playerIz.png"));
+    private final ImageIcon derecha = new ImageIcon(getClass().getResource("/assets/playerDe.png"));
+    
+    
+    
+    
+    
     /**
      * Creates new form VentanaJuego
+     * @param modelo
      */
     public VentanaJuego(Modelo modelo) {
         pModelo = modelo;
-        pModelo.Dibujar();
         initComponents();
-        this.setExtendedState(this.MAXIMIZED_BOTH);
+        addKeyListener(this);
+        this.setExtendedState(VentanaJuego.MAXIMIZED_BOTH);
+        Dibujar();
+        Jugar();
+    }
+    
+    public final void Dibujar() {
         matrizMadre = pModelo.GetMatrizMadre();
         x = pModelo.GetX();
         y = pModelo.GetY();
+        matrizLabels = new JLabel[x][y];
         panelJuego.setLayout(new GridLayout(x, y));
-        ArrayList<JLabel> labelArray = new ArrayList<>() ;
         for (int i = 0;i!=x;i++) {
             for (int j = 0;j!=y;j++) {
                 JLabel label = new JLabel();
                 if(matrizMadre[i][j].equals(listaValores[1])){
-                    label.setIcon(new ImageIcon(getClass().getResource("/assets/bolck4.png")));
+                    label.setIcon(bloque);
                 }
                 else if (matrizMadre[i][j].equals(listaValores[0])) {
-                    label.setIcon(new ImageIcon(getClass().getResource("/assets/playerInicio.png")));
+                    label.setIcon(inicio);
+                }
+                else if (matrizMadre[i][j].equals(listaValores[2])) {
+                    label.setIcon(meta);
                 }
                 else {
-                    label.setIcon(new ImageIcon(getClass().getResource("/assets/piso.png")));
+                    label.setIcon(suelo);
                 }
-                labelArray.add(label);
+                matrizLabels[i][j] = label;
                 panelJuego.add(label);
             }
-            System.out.print("\n");
         }
     }
-
+    
+    public final void Jugar(){
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -113,4 +144,43 @@ public class VentanaJuego extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel panelJuego;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void keyTyped(KeyEvent e) {}
+
+    @Override
+    public void keyPressed(KeyEvent e) {}
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        Variable X = new Variable("X");
+        Variable Y = new Variable("Y");
+        Query posicionActual = new Query("obtenerPosicionActual", new Term[] {X, Y});
+        Map<String, Term> resultados = posicionActual.oneSolution();
+        posX = Integer.parseInt(resultados.get("X").toString());
+        posY = Integer.parseInt(resultados.get("Y").toString());
+        Query movimiento;
+        switch(e.getKeyCode()) {
+           case(38):
+               movimiento = new Query("movimiento", new Term[]{listaValores[6]});
+               System.out.println(movimiento.hasSolution());
+               if (movimiento.hasSolution()) {
+                   //movimientoValido =  new Query("movimiento", new Term[] {listaValores[6]});
+                   matrizLabels[posX][posY].setIcon(arriba); //arriba
+               
+                   break;
+               }
+           case(40):
+               matrizLabels[posX][posY].setIcon(abajo); //abajo
+               break;
+            case(39):
+                matrizLabels[posX][posY].setIcon(derecha);
+                break;
+            case(37):
+                matrizLabels[posX][posY].setIcon(izquierda);
+                break;
+            default:
+                break;
+        } 
+    }
 }

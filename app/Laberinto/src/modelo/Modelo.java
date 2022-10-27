@@ -20,11 +20,15 @@ public class Modelo {
     Atom[] listaValores = {new Atom("i"), new Atom("x"), new Atom("f"), new Atom("ad"), new Atom("at"), new Atom("ab"), new Atom("ar"), new Atom("inter")};
     int x;
     int y;
+    int posActualX;
+    int posActualY;
     
     
     public void ConectarPL() {
         Query conectar = new Query( "consult", new Term[] {new Atom("T:\\2022\\S2\\LENGUAJES DE PROGRAMACION\\PRY3\\Laberinto\\app\\main.pl")});
         System.out.println(conectar.hasSolution());
+        Query limpieza = new Query("limpieza");
+        System.out.println(limpieza.hasSolution());
     }
     public void BuscarArchivo(String direccion) {
         
@@ -34,7 +38,7 @@ public class Modelo {
         Variable X = new Variable("X");
        
         Query obtenerMatriz = new Query("devolverMatriz", new Term[] {X});
-        java.util.Map<String,Term> matriz;
+        Map<String,Term> matriz;
         matriz = obtenerMatriz.oneSolution();
         ObtenerMatriz(matriz);
     }
@@ -65,6 +69,7 @@ public class Modelo {
             System.out.print("\n");
         }
     }
+    
     
     public int GetX() {return x;}
     public int GetY() {return y;}

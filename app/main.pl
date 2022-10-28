@@ -146,7 +146,7 @@ im :- matriz([A|B]), member(i, A).
 im2([A|B]) :- write(A),nl, im2(B).
 im2([]).
 
-
+verificar :- posicion(X, Y).
 
 p :- read(M), p3(M).
 p3(M) :- read(X), p4(M, X).

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
@@ -19,6 +20,7 @@ import org.jpl7.Atom;
 import org.jpl7.Query;
 import org.jpl7.Term;
 import org.jpl7.Variable;
+import org.netbeans.lib.awtextra.AbsoluteLayout;
 
 /**
  *
@@ -43,6 +45,7 @@ public class VentanaJuego extends javax.swing.JFrame implements KeyListener{
     private final ImageIcon arriba = new ImageIcon(getClass().getResource("/assets/playerUp.png"));
     private final ImageIcon izquierda = new ImageIcon(getClass().getResource("/assets/playerIz.png"));
     private final ImageIcon derecha = new ImageIcon(getClass().getResource("/assets/playerDe.png"));
+    private final ImageIcon ganarMsg = new ImageIcon(getClass().getResource("/assets/ganaste.png"));
     
     
     
@@ -185,6 +188,14 @@ public class VentanaJuego extends javax.swing.JFrame implements KeyListener{
                    Query ganar = new Query("verificarGane");
                    if (ganar.hasSolution()) {
                        System.out.println("gano");
+                       JDialog ventanaGanador =  new JDialog();
+                       JLabel ganador = new JLabel();
+                       ganador.setIcon(ganarMsg);
+                       ventanaGanador.setSize(510, 520);
+                       ventanaGanador.setLocationRelativeTo(null);
+                       ventanaGanador.add(ganador);
+                       ventanaGanador.setVisible(true);
+                       ventanaGanador.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
                    }
                }
                break;
@@ -210,6 +221,14 @@ public class VentanaJuego extends javax.swing.JFrame implements KeyListener{
                    Query ganar = new Query("verificarGane");
                    if (ganar.hasSolution()) {
                        System.out.println("gano");
+                       JDialog ventanaGanador =  new JDialog(this);
+                       JLabel ganador = new JLabel();
+                       ganador.setIcon(ganarMsg);
+                       ventanaGanador.setSize(510, 520);
+                       ventanaGanador.setLocationRelativeTo(null);
+                       ventanaGanador.add(ganador);
+                       ventanaGanador.setVisible(true);
+                       ventanaGanador.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
                    }
                }
                break;
@@ -234,6 +253,15 @@ public class VentanaJuego extends javax.swing.JFrame implements KeyListener{
                    Query ganar = new Query("verificarGane");
                    if (ganar.hasSolution()) {
                        System.out.println("gano");
+                       JDialog ventanaGanador =  new JDialog();
+                       
+                       JLabel ganador = new JLabel();
+                       ganador.setIcon(ganarMsg);
+                       ventanaGanador.setSize(510, 520);
+                       ventanaGanador.setLocationRelativeTo(null);
+                       ventanaGanador.add(ganador);
+                       ventanaGanador.setVisible(true);
+                       ventanaGanador.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
                    }
                }
                 break;
@@ -250,14 +278,22 @@ public class VentanaJuego extends javax.swing.JFrame implements KeyListener{
                    Variable Y2 = new Variable("Y");
                    
                    Query posicionNueva = new Query("obtenerPosicionActual", new Term[] {X2, Y2});
-                   Map<String, Term> resultadosRG = posicionNueva.oneSolution();
-                   int nuevoX = Integer.parseInt(resultadosRG.get("X").toString());
-                   int nuevoY = Integer.parseInt(resultadosRG.get("Y").toString());
+                   Map<String, Term> resultadosIZ = posicionNueva.oneSolution();
+                   int nuevoX = Integer.parseInt(resultadosIZ.get("X").toString());
+                   int nuevoY = Integer.parseInt(resultadosIZ.get("Y").toString());
                    
-                   matrizLabels[nuevoX][nuevoY].setIcon(izquierda); //arriba
+                   matrizLabels[nuevoX][nuevoY].setIcon(izquierda); 
                    Query ganar = new Query("verificarGane");
                    if (ganar.hasSolution()) {
                        System.out.println("gano");
+                       JDialog ventanaGanador =  new JDialog();
+                       ventanaGanador.setSize(510, 520);
+                       JLabel ganador = new JLabel();
+                       ganador.setIcon(ganarMsg);
+                       ventanaGanador.setLocationRelativeTo(null);
+                       ventanaGanador.add(ganador);
+                       ventanaGanador.setVisible(true);
+                       ventanaGanador.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
                    }
                }
                break;

@@ -55,7 +55,6 @@ public class VentanaUbicacionArchivo extends javax.swing.JFrame {
         setIconImages(null);
         setLocation(new java.awt.Point(600, 200));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(1920, 1080));
         setResizable(false);
         setType(java.awt.Window.Type.POPUP);
 
@@ -65,7 +64,7 @@ public class VentanaUbicacionArchivo extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         inputArchivo.setBackground(new java.awt.Color(46, 60, 60));
-        inputArchivo.setFont(new java.awt.Font("Calisto MT", 1, 24)); // NOI18N
+        inputArchivo.setFont(new java.awt.Font("Calisto MT", 1, 12)); // NOI18N
         inputArchivo.setForeground(new java.awt.Color(255, 255, 255));
         inputArchivo.setBorder(javax.swing.BorderFactory.createEtchedBorder(null, java.awt.Color.white));
         inputArchivo.addActionListener(new java.awt.event.ActionListener() {

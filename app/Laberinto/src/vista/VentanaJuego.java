@@ -159,26 +159,109 @@ public class VentanaJuego extends javax.swing.JFrame implements KeyListener{
         Map<String, Term> resultados = posicionActual.oneSolution();
         posX = Integer.parseInt(resultados.get("X").toString());
         posY = Integer.parseInt(resultados.get("Y").toString());
-        Query movimiento;
         switch(e.getKeyCode()) {
            case(38):
-               movimiento = new Query("movimiento", new Term[]{listaValores[6]});
-               System.out.println(movimiento.hasSolution());
-               if (movimiento.hasSolution()) {
-                   //movimientoValido =  new Query("movimiento", new Term[] {listaValores[6]});
-                   matrizLabels[posX][posY].setIcon(arriba); //arriba
-               
-                   break;
+               Query movimientoUP = new Query("movimiento", new Term[]{listaValores[6]});
+               System.out.println(movimientoUP.hasSolution());
+               Query verificarUP = new Query("verificarPosicion");
+               System.out.print("Solucion> ");System.out.println(verificarUP.hasSolution());
+               System.out.println(posX);System.out.println(posY);
+      
+               if (verificarUP.hasSolution()) {
+                   System.out.println("si entra");
+                   Query movimientoValido =  new Query("aMovimientoVerificado", new Term[] {listaValores[6]});
+                   System.out.println(movimientoValido.hasSolution());
+                   matrizLabels[posX][posY].setIcon(suelo); //arriba
+                   
+                   Variable X2 = new Variable("X");
+                   Variable Y2 = new Variable("Y");
+                   
+                   Query posicionNueva = new Query("obtenerPosicionActual", new Term[] {X2, Y2});
+                   Map<String, Term> resultadosUP = posicionNueva.oneSolution();
+                   int nuevoX = Integer.parseInt(resultadosUP.get("X").toString());
+                   int nuevoY = Integer.parseInt(resultadosUP.get("Y").toString());
+                   
+                   matrizLabels[nuevoX][nuevoY].setIcon(arriba); //arriba
+                   Query ganar = new Query("verificarGane");
+                   if (ganar.hasSolution()) {
+                       System.out.println("gano");
+                   }
                }
+               break;
            case(40):
-               matrizLabels[posX][posY].setIcon(abajo); //abajo
+               Query movimientoDown = new Query("movimiento", new Term[]{listaValores[5]});
+               System.out.println(movimientoDown.hasSolution());
+               Query verificarDown = new Query("verificarPosicion");
+               
+               if (verificarDown.hasSolution()) {
+                   Query movimientoValido =  new Query("aMovimientoVerificado", new Term[] {listaValores[5]});
+                   System.out.println(movimientoValido.hasSolution());
+               
+                   matrizLabels[posX][posY].setIcon(suelo); //abajo
+                   Variable X2 = new Variable("X");
+                   Variable Y2 = new Variable("Y");
+                   
+                   Query posicionNueva = new Query("obtenerPosicionActual", new Term[] {X2, Y2});
+                   Map<String, Term> resultadosDown = posicionNueva.oneSolution();
+                   int nuevoX = Integer.parseInt(resultadosDown.get("X").toString());
+                   int nuevoY = Integer.parseInt(resultadosDown.get("Y").toString());
+                   
+                   matrizLabels[nuevoX][nuevoY].setIcon(abajo); //abajo
+                   Query ganar = new Query("verificarGane");
+                   if (ganar.hasSolution()) {
+                       System.out.println("gano");
+                   }
+               }
                break;
             case(39):
-                matrizLabels[posX][posY].setIcon(derecha);
+               Query movimientoRG = new Query("movimiento", new Term[]{listaValores[3]});
+               System.out.println(movimientoRG.hasSolution());
+               Query verificarRG = new Query("verificarPosicion");
+               
+               if (verificarRG.hasSolution()) {
+                   Query movimientoValido =  new Query("aMovimientoVerificado", new Term[] {listaValores[3]});
+                   System.out.println(movimientoValido.hasSolution());
+                   matrizLabels[posX][posY].setIcon(suelo);
+                   Variable X2 = new Variable("X");
+                   Variable Y2 = new Variable("Y");
+                   
+                   Query posicionNueva = new Query("obtenerPosicionActual", new Term[] {X2, Y2});
+                   Map<String, Term> resultadosRG = posicionNueva.oneSolution();
+                   int nuevoX = Integer.parseInt(resultadosRG.get("X").toString());
+                   int nuevoY = Integer.parseInt(resultadosRG.get("Y").toString());
+                   
+                   matrizLabels[nuevoX][nuevoY].setIcon(derecha);
+                   Query ganar = new Query("verificarGane");
+                   if (ganar.hasSolution()) {
+                       System.out.println("gano");
+                   }
+               }
                 break;
             case(37):
-                matrizLabels[posX][posY].setIcon(izquierda);
-                break;
+                Query movimientoIZ = new Query("movimiento", new Term[]{listaValores[4]});
+                System.out.println(movimientoIZ.hasSolution());
+                Query verificarIZ = new Query("verificarPosicion");
+               
+               if (verificarIZ.hasSolution()) {
+                   Query movimientoValido =  new Query("aMovimientoVerificado", new Term[] {listaValores[4]});
+                   System.out.println(movimientoValido.hasSolution());
+                   matrizLabels[posX][posY].setIcon(suelo);
+                   Variable X2 = new Variable("X");
+                   Variable Y2 = new Variable("Y");
+                   
+                   Query posicionNueva = new Query("obtenerPosicionActual", new Term[] {X2, Y2});
+                   Map<String, Term> resultadosRG = posicionNueva.oneSolution();
+                   int nuevoX = Integer.parseInt(resultadosRG.get("X").toString());
+                   int nuevoY = Integer.parseInt(resultadosRG.get("Y").toString());
+                   
+                   matrizLabels[nuevoX][nuevoY].setIcon(izquierda); //arriba
+                   Query ganar = new Query("verificarGane");
+                   if (ganar.hasSolution()) {
+                       System.out.println("gano");
+                   }
+               }
+               break;
+                
             default:
                 break;
         } 

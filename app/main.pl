@@ -5,15 +5,13 @@ aMovimiento(ar) :-
     X is I,
     Y is J,
 	NuevoX is X - 1,
-    verificarMovimiento(NuevoX, Y),
 
-    retractall(posicionAnt(_,_)),
-    retractall(posicion(_,_)),
+    retractall(posV(_, _)),
+    asserta(posV(NuevoX, Y)),
+    
     retractall(mov(_)),
-
-    asserta(posicionAnt(X, Y)),
     asserta(mov(ar)),
-    asserta(posicion(NuevoX, Y)).
+    ubicarJugador.
 
 % Abajo
 aMovimiento(ab) :-
@@ -21,15 +19,14 @@ aMovimiento(ab) :-
     X is I,
     Y is J,
 	NuevoX is X + 1,
-    verificarMovimiento(NuevoX, Y),
 
-    retractall(posicionAnt(_,_)),
-    retractall(posicion(_,_)),
+    retractall(posV(_, _)),
+    asserta(posV(NuevoX, Y)),
+
     retractall(mov(_)),
-
-    asserta(posicionAnt(X, Y)),
     asserta(mov(ab)),
-    asserta(posicion(NuevoX, Y)).
+    ubicarJugador.
+
 
 % Izquierda
 aMovimiento(at) :-
@@ -37,15 +34,13 @@ aMovimiento(at) :-
     X is I,
     Y is J,
 	NuevoY is Y - 1,
-    verificarMovimiento(X, NuevoY),
 
-    retractall(posicionAnt(_,_)),
-    retractall(posicion(_,_)),
+    retractall(posV(_, _)),
+    asserta(posV(X, NuevoY)),
+
     retractall(mov(_)),
-
-    asserta(posicionAnt(X, Y)),
     asserta(mov(at)),
-    asserta(posicion(X, NuevoY)).
+    ubicarJugador.
 
 % Derecha
 aMovimiento(ad) :-
@@ -53,15 +48,46 @@ aMovimiento(ad) :-
     X is I,
     Y is J,
 	NuevoY is Y + 1,
-    verificarMovimiento(X, NuevoY),
 
-    retractall(posicionAnt(_,_)),
+    retractall(posV(_, _)),
+    asserta(posV(X, NuevoY)),
+
+    retractall(mov(_)),
+    asserta(mov(ad)),
+    ubicarJugador.
+
+
+aMovimientoVerificado(ar) :-
+    posV(X, Y),
     retractall(posicion(_,_)),
     retractall(mov(_)),
 
-    asserta(posicionAnt(X, Y)),
+    asserta(mov(ar)),
+    asserta(posicion(X, Y)).
+
+aMovimientoVerificado(ab) :-
+    posV(X, Y),
+    retractall(posicion(_,_)),
+    retractall(mov(_)),
+
+    asserta(mov(ab)),
+    asserta(posicion(X, Y)).
+
+aMovimientoVerificado(at) :-
+    posV(X, Y),
+    retractall(posicion(_,_)),
+    retractall(mov(_)),
+
+    asserta(mov(at)),
+    asserta(posicion(X, Y)).
+    
+aMovimientoVerificado(ad) :-
+    posV(X, Y),
+    retractall(posicion(_,_)),
+    retractall(mov(_)),
+
     asserta(mov(ad)),
-    asserta(posicion(X, NuevoY)).
+    asserta(posicion(X, Y)).
 
 verificarMovimiento(X, Y) :- 
     X >=0, 
@@ -99,23 +125,20 @@ buscarInicio3([A|B], I, J) :- A == i, asserta(posicion(I, J)), asserta(posicionA
 buscarInicio3([A|B], I, J) :- not(A == i), R is J+1, buscarInicio3(B, I, R).
 buscarInicio3([],_,_).
 
-movimiento(M) :- aMovimiento(M), ubicarJugador. %% revisar aMovimiento porque da true, tengo que verificar el movimiento primero
+movimiento(M) :- aMovimiento(M). %% revisar aMovimiento porque da true, tengo que verificar el movimiento primero
 
-ubicarJugador :- posicion(I, J), matriz([A|B]), I =\= 0, R is 1, ubicarJugadorI(R, B).
-ubicarJugador :- posicion(I, J), matriz([A|B]), I == 0, R is 0, ubicarJugador3(R, A).
+ubicarJugador :- posV(I, J), matriz([A|B]), I =\= 0, R is 1, ubicarJugadorI(R, B).
+ubicarJugador :- posV(I, J), matriz([A|B]), I == 0, R is 0, ubicarJugadorJ(R, A).
 
-ubicarJugadorI(X, [A|B]) :- posicion(I, J), X == I, R is 0, ubicarJugadorJ(R, A).
-ubicarJugadorI(X, [A|B]) :- posicion(I, J), X =\= I, R is X+1, ubicarJugadorI(R, B).
+ubicarJugadorI(I, [A|B]) :- posV(I, J), R is 0, ubicarJugadorJ(R, A).
+ubicarJugadorI(X, [A|B]) :- posV(I, J), X =\= I, R is X+1, ubicarJugadorI(R, B).
 
-ubicarJugadorJ(X, [A|B]) :- posicion(I, J), X == J, write(I), nl , write(J), verificarPosicion(A).
-ubicarJugadorJ(X, [A|B]) :- posicion(I, J), X =\= J, R is X+1, ubicarJugadorJ(R, B). 
+ubicarJugadorJ(J, [A|B]) :- posV(I, J), write(I), nl , write(J), retractall(valorActual(_)), asserta(valorActual(A)).
+ubicarJugadorJ(X, [A|B]) :- posV(I, J), X =\= J, R is X+1, ubicarJugadorJ(R, B). 
 
-%%verificarPosicion(C) :- write(C), nl,  mov(T), C == T ; C == inter, write("si"), nl,!.
-%%verificarPosicion(C) :- write(C), nl,  C == f, write("termino"), nl.
-verificarPosicion(C) :- mov(T), write(C),nl, C == x ; not(C == T), fail, write("no"), nl ,posicionAnt(X_a, Y_a), posicion(X, Y), retractall(posicion(_,_)), asserta(posicion(X_a, Y_a)), fail.
+verificarPosicion :- valorActual(C), not(C == x),  write("si"), !.
+verificarGane :- valorActual(C), C == f, write("termino"), nl, !.
 
-
-verificarGane :- matriz([A|B]).
 
 probar(X) :-  X is 1.
 p2(R) :- R == 2 , R == 1, write("si"). 
@@ -124,3 +147,7 @@ im2([A|B]) :- write(A),nl, im2(B).
 im2([]).
 
 
+
+p :- read(M), p3(M).
+p3(M) :- read(X), p4(M, X).
+p4(M,X) :- Y = inter, Y==X.

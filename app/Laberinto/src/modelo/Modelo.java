@@ -2,13 +2,25 @@
  */
 package modelo;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Map;
 import javax.swing.JDialog;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import org.jpl7.Atom;
 import org.jpl7.Query;
 import org.jpl7.Term;
 import org.jpl7.Variable;
+import org.w3c.dom.DOMImplementation;
+import org.w3c.dom.Document;
 
 /**
  *
@@ -74,5 +86,46 @@ public class Modelo {
     public int GetX() {return x;}
     public int GetY() {return y;}
     public Term[][] GetMatrizMadre() {return matrizMadre;}
+    
+    public void CrearXML() {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        try
+        {
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            DOMImplementation implementation = builder.getDOMImplementation();
+            
+            Document documento = implementation.createDocument(null,"DatosJugador",null);
+            documento.setXmlVersion("1.0");
+            
+            //Element usuarios= documento.createElement("Datos");
+            //documento.getDocumentElement().appendChild(usuarios);
+            
+            Source source= new DOMSource(documento);
+            Result result= new StreamResult(new File("Data.xml"));
+            
+            try
+            {
+                Transformer transformer= TransformerFactory.newInstance().newTransformer();
+                try
+                {
+                    transformer.transform(source,result);
+                }
+                catch (javax.xml.transform.TransformerException te)
+                {
+                    te.printStackTrace();
+                }
+                
+            }
+            catch (javax.xml.transform.TransformerConfigurationException tce)
+            {
+                tce.printStackTrace();
+            }
+            
+        }
+        catch (ParserConfigurationException pce)
+        {
+            pce.printStackTrace();
+        }
+    }
     
 }

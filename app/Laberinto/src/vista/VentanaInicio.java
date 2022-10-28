@@ -117,6 +117,7 @@ public class VentanaInicio extends javax.swing.JFrame {
         VentanaUbicacionArchivo venta = new VentanaUbicacionArchivo(modelo);
         venta.setVisible(true);
         venta.setLocationRelativeTo(null);
+        this.dispose();
         
     }//GEN-LAST:event_jButton1ActionPerformed
 

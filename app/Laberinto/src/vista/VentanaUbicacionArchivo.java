@@ -155,7 +155,7 @@ public class VentanaUbicacionArchivo extends javax.swing.JFrame {
         String nombre = nombreJug.getText();
         
         
-        VentanaJuego juego = new VentanaJuego(pModelo);
+        VentanaJuego juego = new VentanaJuego(pModelo, nombre);
         juego.setVisible(true);
         this.dispose();
         

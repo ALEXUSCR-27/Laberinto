@@ -36,6 +36,9 @@ public class VentanaJuego extends javax.swing.JFrame implements KeyListener{
     JLabel[][] matrizLabels;
     int posX;
     int posY;
+    int cantidadMovimientos;
+    String pNombre;
+    String tipoFinalizacion;
     
     private final ImageIcon bloque = new ImageIcon(getClass().getResource("/assets/bolck4.png"));
     private final ImageIcon suelo = new ImageIcon(getClass().getResource("/assets/piso.png"));
@@ -55,8 +58,9 @@ public class VentanaJuego extends javax.swing.JFrame implements KeyListener{
      * Creates new form VentanaJuego
      * @param modelo
      */
-    public VentanaJuego(Modelo modelo) {
+    public VentanaJuego(Modelo modelo, String nombre) {
         pModelo = modelo;
+        pNombre = nombre;
         initComponents();
         addKeyListener(this);
         this.setExtendedState(VentanaJuego.MAXIMIZED_BOTH);
@@ -171,6 +175,7 @@ public class VentanaJuego extends javax.swing.JFrame implements KeyListener{
                System.out.println(posX);System.out.println(posY);
       
                if (verificarUP.hasSolution()) {
+                   cantidadMovimientos++;
                    System.out.println("si entra");
                    Query movimientoValido =  new Query("aMovimientoVerificado", new Term[] {listaValores[6]});
                    System.out.println(movimientoValido.hasSolution());
@@ -187,15 +192,13 @@ public class VentanaJuego extends javax.swing.JFrame implements KeyListener{
                    matrizLabels[nuevoX][nuevoY].setIcon(arriba); //arriba
                    Query ganar = new Query("verificarGane");
                    if (ganar.hasSolution()) {
+                       tipoFinalizacion = "exitoso";
                        System.out.println("gano");
-                       JDialog ventanaGanador =  new JDialog();
-                       JLabel ganador = new JLabel();
-                       ganador.setIcon(ganarMsg);
-                       ventanaGanador.setSize(510, 520);
-                       ventanaGanador.setLocationRelativeTo(null);
-                       ventanaGanador.add(ganador);
-                       ventanaGanador.setVisible(true);
-                       ventanaGanador.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+                       pModelo.RegistrarJugador(pNombre, String.valueOf(cantidadMovimientos), tipoFinalizacion);
+                       VentanaGane terminarJuego = new VentanaGane(this);
+                       terminarJuego.setLocationRelativeTo(null);
+                       terminarJuego.setVisible(true);
+                       
                    }
                }
                break;
@@ -205,6 +208,7 @@ public class VentanaJuego extends javax.swing.JFrame implements KeyListener{
                Query verificarDown = new Query("verificarPosicion");
                
                if (verificarDown.hasSolution()) {
+                   cantidadMovimientos++;
                    Query movimientoValido =  new Query("aMovimientoVerificado", new Term[] {listaValores[5]});
                    System.out.println(movimientoValido.hasSolution());
                
@@ -220,15 +224,12 @@ public class VentanaJuego extends javax.swing.JFrame implements KeyListener{
                    matrizLabels[nuevoX][nuevoY].setIcon(abajo); //abajo
                    Query ganar = new Query("verificarGane");
                    if (ganar.hasSolution()) {
+                       tipoFinalizacion = "exitoso";
                        System.out.println("gano");
-                       JDialog ventanaGanador =  new JDialog(this);
-                       JLabel ganador = new JLabel();
-                       ganador.setIcon(ganarMsg);
-                       ventanaGanador.setSize(510, 520);
-                       ventanaGanador.setLocationRelativeTo(null);
-                       ventanaGanador.add(ganador);
-                       ventanaGanador.setVisible(true);
-                       ventanaGanador.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+                       pModelo.RegistrarJugador(pNombre, String.valueOf(cantidadMovimientos), tipoFinalizacion);
+                       VentanaGane terminarJuego = new VentanaGane(this);
+                       terminarJuego.setLocationRelativeTo(null);
+                       terminarJuego.setVisible(true);
                    }
                }
                break;
@@ -238,6 +239,7 @@ public class VentanaJuego extends javax.swing.JFrame implements KeyListener{
                Query verificarRG = new Query("verificarPosicion");
                
                if (verificarRG.hasSolution()) {
+                   cantidadMovimientos++;
                    Query movimientoValido =  new Query("aMovimientoVerificado", new Term[] {listaValores[3]});
                    System.out.println(movimientoValido.hasSolution());
                    matrizLabels[posX][posY].setIcon(suelo);
@@ -252,16 +254,12 @@ public class VentanaJuego extends javax.swing.JFrame implements KeyListener{
                    matrizLabels[nuevoX][nuevoY].setIcon(derecha);
                    Query ganar = new Query("verificarGane");
                    if (ganar.hasSolution()) {
+                       tipoFinalizacion = "exitoso";
+                       pModelo.RegistrarJugador(pNombre, String.valueOf(cantidadMovimientos), tipoFinalizacion);
                        System.out.println("gano");
-                       JDialog ventanaGanador =  new JDialog();
-                       
-                       JLabel ganador = new JLabel();
-                       ganador.setIcon(ganarMsg);
-                       ventanaGanador.setSize(510, 520);
-                       ventanaGanador.setLocationRelativeTo(null);
-                       ventanaGanador.add(ganador);
-                       ventanaGanador.setVisible(true);
-                       ventanaGanador.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+                       VentanaGane terminarJuego = new VentanaGane(this);
+                       terminarJuego.setLocationRelativeTo(null);
+                       terminarJuego.setVisible(true);
                    }
                }
                 break;
@@ -271,6 +269,7 @@ public class VentanaJuego extends javax.swing.JFrame implements KeyListener{
                 Query verificarIZ = new Query("verificarPosicion");
                
                if (verificarIZ.hasSolution()) {
+                   cantidadMovimientos++;
                    Query movimientoValido =  new Query("aMovimientoVerificado", new Term[] {listaValores[4]});
                    System.out.println(movimientoValido.hasSolution());
                    matrizLabels[posX][posY].setIcon(suelo);
@@ -285,15 +284,12 @@ public class VentanaJuego extends javax.swing.JFrame implements KeyListener{
                    matrizLabels[nuevoX][nuevoY].setIcon(izquierda); 
                    Query ganar = new Query("verificarGane");
                    if (ganar.hasSolution()) {
+                       tipoFinalizacion = "exitoso";
+                       pModelo.RegistrarJugador(pNombre, String.valueOf(cantidadMovimientos), tipoFinalizacion);
                        System.out.println("gano");
-                       JDialog ventanaGanador =  new JDialog();
-                       ventanaGanador.setSize(510, 520);
-                       JLabel ganador = new JLabel();
-                       ganador.setIcon(ganarMsg);
-                       ventanaGanador.setLocationRelativeTo(null);
-                       ventanaGanador.add(ganador);
-                       ventanaGanador.setVisible(true);
-                       ventanaGanador.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+                       VentanaGane terminarJuego = new VentanaGane(this);
+                       terminarJuego.setLocationRelativeTo(null);
+                       terminarJuego.setVisible(true);
                    }
                }
                break;
@@ -301,5 +297,11 @@ public class VentanaJuego extends javax.swing.JFrame implements KeyListener{
             default:
                 break;
         } 
+    }
+    
+    public void Reiniciar() {
+        VentanaInicio nuevoJuego = new VentanaInicio();
+        nuevoJuego.setVisible(true);
+        this.dispose();
     }
 }

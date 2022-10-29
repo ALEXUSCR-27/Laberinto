@@ -15,7 +15,7 @@ import modelo.Modelo;
  * @author asmal
  */
 public class VentanaInicio extends javax.swing.JFrame {
-    Modelo modelo =  new Modelo();
+    Modelo modelo = new Modelo();
     /**
      * Creates new form VentanaInicio
      */

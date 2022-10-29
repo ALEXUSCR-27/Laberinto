@@ -19,6 +19,7 @@ public class Laberinto {
      */
     public static void main(String[] args) {
         Modelo modelo = new Modelo();
+        modelo.CrearXML();
         
         modelo.ConectarPL();
         VentanaInicio ventanaInicio = new VentanaInicio();

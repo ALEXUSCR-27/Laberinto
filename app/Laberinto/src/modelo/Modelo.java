@@ -21,6 +21,8 @@ import org.jpl7.Term;
 import org.jpl7.Variable;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Text;
 
 /**
  *
@@ -89,43 +91,75 @@ public class Modelo {
     
     public void CrearXML() {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        try
-        {
+        try {
             DocumentBuilder builder = factory.newDocumentBuilder();
             DOMImplementation implementation = builder.getDOMImplementation();
             
             Document documento = implementation.createDocument(null,"DatosJugador",null);
             documento.setXmlVersion("1.0");
             
-            //Element usuarios= documento.createElement("Datos");
-            //documento.getDocumentElement().appendChild(usuarios);
-            
             Source source= new DOMSource(documento);
             Result result= new StreamResult(new File("Data.xml"));
-            
+            try {
+                Transformer transformer= TransformerFactory.newInstance().newTransformer();
+                try {transformer.transform(source,result);}
+                catch (javax.xml.transform.TransformerException te) {te.printStackTrace();}      
+            }
+            catch (javax.xml.transform.TransformerConfigurationException tce) {tce.printStackTrace();}
+        }
+        catch (ParserConfigurationException pce) {pce.printStackTrace();}
+    }
+    
+    public void RegistrarJugador(String nombre, String cantMovimientos, String tipo) {
+        DocumentBuilderFactory factory= DocumentBuilderFactory.newInstance();
             try
             {
-                Transformer transformer= TransformerFactory.newInstance().newTransformer();
+                DocumentBuilder builder= factory.newDocumentBuilder();
                 try
                 {
-                    transformer.transform(source,result);
+                    try
+                    {
+                        Document documento = builder.parse("Data.xml");
+                        Element raiz = documento.getDocumentElement();
+                        
+                        Element jugador = documento.createElement("Jugador");
+                        
+                        Element etiquetaNombre = documento.createElement("Nombre");
+                        Text textoNombre= documento.createTextNode(nombre);
+                        etiquetaNombre.appendChild(textoNombre);
+                        jugador.appendChild(etiquetaNombre);
+                        
+                        Element etiquetaMovimientos = documento.createElement("CantidadMovimientos");
+                        Text textoMovimientos = documento.createTextNode(cantMovimientos);
+                        etiquetaMovimientos.appendChild(textoMovimientos);
+                        jugador.appendChild(etiquetaMovimientos);
+                        
+                        Element etiquetaTipo = documento.createElement("TipoFinalizacion");
+                        Text textoTipo = documento.createTextNode(tipo);
+                        etiquetaTipo.appendChild(textoTipo);
+                        jugador.appendChild(etiquetaTipo);
+                        
+                        raiz.appendChild(jugador);
+                        
+                        DOMSource source = new DOMSource(documento);
+
+                        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+                        StreamResult result = new StreamResult("Data.xml");
+                        try {
+                            Transformer transformer = transformerFactory.newTransformer();
+                            try {
+                                transformer.transform(source, result);
+                                return;
+                            }
+                            catch (javax.xml.transform.TransformerException te) {te.printStackTrace();}
+                        } 
+                        catch (javax.xml.transform.TransformerConfigurationException tce) {tce.printStackTrace();}
+                    }
+                    catch (java.io.IOException ioe) {ioe.printStackTrace();}
                 }
-                catch (javax.xml.transform.TransformerException te)
-                {
-                    te.printStackTrace();
-                }
-                
+                catch (org.xml.sax.SAXException saxe) {saxe.printStackTrace();}
             }
-            catch (javax.xml.transform.TransformerConfigurationException tce)
-            {
-                tce.printStackTrace();
-            }
-            
-        }
-        catch (ParserConfigurationException pce)
-        {
-            pce.printStackTrace();
-        }
+            catch (ParserConfigurationException pce) {pce.printStackTrace();}
     }
     
 }

@@ -46,7 +46,7 @@ public class VentanaUbicacionArchivo extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        volver = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -67,6 +67,8 @@ public class VentanaUbicacionArchivo extends javax.swing.JFrame {
         inputArchivo.setFont(new java.awt.Font("Calisto MT", 1, 12)); // NOI18N
         inputArchivo.setForeground(new java.awt.Color(255, 255, 255));
         inputArchivo.setBorder(javax.swing.BorderFactory.createEtchedBorder(null, java.awt.Color.white));
+        inputArchivo.setCaretColor(new java.awt.Color(255, 255, 255));
+        inputArchivo.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         inputArchivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 inputArchivoActionPerformed(evt);
@@ -91,6 +93,7 @@ public class VentanaUbicacionArchivo extends javax.swing.JFrame {
         nombreJug.setForeground(new java.awt.Color(255, 255, 255));
         nombreJug.setAutoscrolls(false);
         nombreJug.setBorder(javax.swing.BorderFactory.createEtchedBorder(null, java.awt.Color.white));
+        nombreJug.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         jPanel1.add(nombreJug, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 520, 480, 50));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/bichito.png"))); // NOI18N
@@ -106,15 +109,15 @@ public class VentanaUbicacionArchivo extends javax.swing.JFrame {
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/nombreJug.png"))); // NOI18N
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 500, -1, -1));
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/volver.png"))); // NOI18N
-        jButton2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 153, 153), new java.awt.Color(51, 51, 51), new java.awt.Color(0, 255, 255), new java.awt.Color(0, 153, 153)));
-        jButton2.setContentAreaFilled(false);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        volver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/volver.png"))); // NOI18N
+        volver.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 153, 153), new java.awt.Color(51, 51, 51), new java.awt.Color(0, 255, 255), new java.awt.Color(0, 153, 153)));
+        volver.setContentAreaFilled(false);
+        volver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                volverActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 920, 180, 70));
+        jPanel1.add(volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 920, 180, 70));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fondo5.jpg"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -145,16 +148,16 @@ public class VentanaUbicacionArchivo extends javax.swing.JFrame {
         BuscarArchivo();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
+        VentanaInicio ventanaInicio = new VentanaInicio();
+        ventanaInicio.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_volverActionPerformed
     
     private void BuscarArchivo() {
         String direccion = inputArchivo.getText();
         pModelo.BuscarArchivo(direccion);
         String nombre = nombreJug.getText();
-        
-        
         VentanaJuego juego = new VentanaJuego(pModelo, nombre);
         juego.setVisible(true);
         this.dispose();
@@ -164,7 +167,6 @@ public class VentanaUbicacionArchivo extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField inputArchivo;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -172,5 +174,6 @@ public class VentanaUbicacionArchivo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField nombreJug;
+    private javax.swing.JButton volver;
     // End of variables declaration//GEN-END:variables
 }

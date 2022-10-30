@@ -19,6 +19,7 @@ public class VentanaEstadisticas extends javax.swing.JFrame {
     public VentanaEstadisticas(Modelo modelo) {
         initComponents();
         pModelo = modelo;
+        datosJugadores.setText(modelo.ObtenerJugadores());
     }
 
     /**
@@ -34,6 +35,8 @@ public class VentanaEstadisticas extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         datosJugadores = new javax.swing.JTextArea();
+        jLabel3 = new javax.swing.JLabel();
+        volver = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -46,14 +49,33 @@ public class VentanaEstadisticas extends javax.swing.JFrame {
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/estadistica.png"))); // NOI18N
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 100, -1, -1));
 
-        datosJugadores.setBackground(new java.awt.Color(0, 0, 0));
+        jScrollPane1.setBorder(null);
+
+        datosJugadores.setBackground(new java.awt.Color(26, 37, 49));
         datosJugadores.setColumns(20);
+        datosJugadores.setFont(new java.awt.Font("Bodoni MT", 0, 28)); // NOI18N
         datosJugadores.setForeground(new java.awt.Color(255, 255, 255));
+        datosJugadores.setLineWrap(true);
         datosJugadores.setRows(5);
-        datosJugadores.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        datosJugadores.setBorder(null);
+        datosJugadores.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        datosJugadores.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        datosJugadores.setEnabled(false);
         jScrollPane1.setViewportView(datosJugadores);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 370, 630, 590));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 480, 370, 480));
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cuadroE.png"))); // NOI18N
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 320, -1, -1));
+
+        volver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/volver.png"))); // NOI18N
+        volver.setContentAreaFilled(false);
+        volver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                volverActionPerformed(evt);
+            }
+        });
+        jPanel1.add(volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 950, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fondo5.jpg"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -76,12 +98,21 @@ public class VentanaEstadisticas extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
+        VentanaInicio ventanaInicio = new VentanaInicio();
+        ventanaInicio.setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_volverActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea datosJugadores;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton volver;
     // End of variables declaration//GEN-END:variables
 }

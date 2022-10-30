@@ -22,6 +22,8 @@ import org.jpl7.Variable;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
 /**
@@ -160,6 +162,44 @@ public class Modelo {
                 catch (org.xml.sax.SAXException saxe) {saxe.printStackTrace();}
             }
             catch (ParserConfigurationException pce) {pce.printStackTrace();}
+    }
+    
+    public String ObtenerJugadores() {
+        String msg = "";
+        
+        DocumentBuilderFactory factory= DocumentBuilderFactory.newInstance();
+        try {
+            DocumentBuilder builder= factory.newDocumentBuilder();
+            try {
+                try {
+                    Document documento = builder.parse("Data.xml");
+                    NodeList jugadores = documento.getElementsByTagName("Jugador");
+                    System.out.println(jugadores.getLength());
+                    
+                    for (int i=0;i< jugadores.getLength();i++){
+                        Node jugador = jugadores.item(i);
+                        
+                        
+                        if(jugador.getNodeType() == Node.ELEMENT_NODE){
+                           Element element = (Element) jugador;
+                           
+                           String Nombre= element.getElementsByTagName("Nombre").item(0).getTextContent();
+                           System.out.println(Nombre);
+                           String CantidadMovimientos = element.getElementsByTagName("CantidadMovimientos").item(0).getTextContent();
+                           String TipoFinalizacion = element.getElementsByTagName("TipoFinalizacion").item(0).getTextContent();
+                           
+                           msg += "Nombre del jugador: "+Nombre + "\nCantidad de Movimientos: "+CantidadMovimientos+"\nTipo de finalizacion: "+TipoFinalizacion+"\n\n";
+                           
+                        }
+                    }
+                }
+                catch (java.io.IOException ioe) {ioe.printStackTrace();}
+            }
+            catch (org.xml.sax.SAXException saxe) {saxe.printStackTrace();}
+        }
+        catch (ParserConfigurationException pce) {pce.printStackTrace();}
+        System.out.println(msg);
+        return msg;
     }
     
 }

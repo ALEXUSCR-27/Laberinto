@@ -257,6 +257,7 @@ public class VentanaJuego extends javax.swing.JFrame implements KeyListener{
                        tipoFinalizacion = "exitoso";
                        pModelo.RegistrarJugador(pNombre, String.valueOf(cantidadMovimientos), tipoFinalizacion);
                        System.out.println("gano");
+                       pModelo.ObtenerJugadores();
                        VentanaGane terminarJuego = new VentanaGane(this);
                        terminarJuego.setLocationRelativeTo(null);
                        terminarJuego.setVisible(true);

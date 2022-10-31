@@ -113,7 +113,7 @@ obtenerLaberinto(Stream,[X|L], R) :-
     read(Stream,X),
     obtenerLaberinto(Stream,L, X).
 
-buscarInicio :- matriz([A|B]), member(i, A), I is 0, J is 0, asserta(posicion(I, J)), asserta(posicionAnt(I, J)), !.
+buscarInicio :- matriz([A|B]), member(i, A), I is 0, J is 0, buscarInicio3(A, I, J), !.
 buscarInicio :- matriz([A|B]), not(member(i, A)), I is 1, J is 0, buscarInicio2(B, I, J).
 buscarInicio.
 
@@ -121,7 +121,7 @@ buscarInicio2([A|B], I, J) :- member(i, A), buscarInicio3(A, I, J).
 buscarInicio2([A|B], I, J) :- not(member(i, A)), R is I+1, buscarInicio2(B, R, J).
 buscarInicio2([],_,_).
 
-buscarInicio3([A|B], I, J) :- A == i, asserta(posicion(I, J)), asserta(posicionAnt(I, J)),!.
+buscarInicio3([A|B], I, J) :- A == i, asserta(posicion(I, J)), asserta(posicionAnt(I, J)), asserta(valorActual(i)), asserta(valorAnterior(i)),!.
 buscarInicio3([A|B], I, J) :- not(A == i), R is J+1, buscarInicio3(B, I, R).
 buscarInicio3([],_,_).
 
@@ -133,12 +133,15 @@ ubicarJugador :- posV(I, J), matriz([A|B]), I == 0, R is 0, ubicarJugadorJ(R, A)
 ubicarJugadorI(I, [A|B]) :- posV(I, J), R is 0, ubicarJugadorJ(R, A).
 ubicarJugadorI(X, [A|B]) :- posV(I, J), X =\= I, R is X+1, ubicarJugadorI(R, B).
 
-ubicarJugadorJ(J, [A|B]) :- posV(I, J), write(I), nl , write(J), retractall(valorActual(_)), asserta(valorActual(A)).
+ubicarJugadorJ(J, [A|B]) :- posV(I, J), valorActual(C), write(I), nl , write(J), retractall(valorAnterior(_)), asserta(valorAnterior(C)), retractall(valorActual(_)), asserta(valorActual(A)).
 ubicarJugadorJ(X, [A|B]) :- posV(I, J), X =\= J, R is X+1, ubicarJugadorJ(R, B). 
 
-verificarPosicion :- valorActual(C), not(C == x),  write("si"), !.
+%verificarPosicion :- valorActual(C), mov(T) not(C == x),  write("si"), !.
+verificarPosicion :- valorActual(C), mov(T), C == T, !.
+verificarPosicion :- valorActual(C), C == inter, !.
+verificarPosicion :- valorActual(C), C == i,!.
+verificarPosicion :- valorAnterior(T), valorActual(C), T == inter, not(C == x),!.
 verificarGane :- valorActual(C), C == f, write("termino"), nl, !.
-
 
 probar(X) :-  X is 1.
 p2(R) :- R == 2 , R == 1, write("si"). 
@@ -146,8 +149,21 @@ im :- matriz([A|B]), member(i, A).
 im2([A|B]) :- write(A),nl, im2(B).
 im2([]).
 
-verificar :- posicion(X, Y).
+esValido(R, C, X, Y) :- not(R==x), C == i, retractall(valorTemporal(_)), asserta(valorTemporal(R)), retractall(posT(_, _)), asserta(posT(X, Y)), !.
+esValido(R, C, X, Y) :- not(R==x), C == inter, retractall(valorTemporal(_)), asserta(valorTemporal(R)), retractall(posT(_, _)), asserta(posT(X, Y)), !.
+esValido(R, C, X, Y) :- C == ab, R == ab, retractall(valorTemporal(_)), asserta(valorTemporal(R)), retractall(posT(_, _)), asserta(posT(X, Y)), !.
+esValido(R, C, X, Y) :- C == at, R == at, retractall(valorTemporal(_)), asserta(valorTemporal(R)), retractall(posT(_, _)), asserta(posT(X, Y)), !.
+esValido(R, C, X, Y) :- C == ad, R == ad, retractall(valorTemporal(_)), asserta(valorTemporal(R)), retractall(posT(_, _)), asserta(posT(X, Y)), !.
+esValido(R, C, X, Y) :- C == ar, R == ar, retractall(valorTemporal(_)), asserta(valorTemporal(R)), retractall(posT(_, _)), asserta(posT(X, Y)), !.
+%esValido(R, C, X, Y) :- not(C == x), R == f, retractall(valorTemporal(_)), asserta(valorTemporal(R)), retractall(posT(_, _)), asserta(posT(X, Y)), !.
 
-p :- read(M), p3(M).
+verificar :- valorActual(C), posicion(X, Y), retractall(posT(_, _)), retractall(valorTemporal(_)), asserta(posT(X, Y)), asserta(valorTemporal(C)), verificar2.
+verificar2 :- posT(X, Y), NuevoX is X+1, verificarAux(NuevoX, Y), verificar2.
+verificar2 :- posT(X, Y), NuevoX is X-1, verificarAux(NuevoX, Y), verificar2. 
+verificar2 :- posT(X, Y), NuevoY is Y+1, verificarAux(X, NuevoY), verificar2.
+verificar2 :- posT(X, Y), NuevoY is Y-1, verificarAux(X, NuevoY), verificar2.
+verificarAux :- posT(X, Y), valorTemporal(C), not(C ==f), matriz(M),  nth0(X_N, M, F), nth0(Y, F, R), write(C), write(R), esValido(R, C, X_N, Y).
+
+p :- matriz(M), nth0(1,M,X), write(X).
 p3(M) :- read(X), p4(M, X).
 p4(M,X) :- Y = inter, Y==X.

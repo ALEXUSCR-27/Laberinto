@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package vista;
 
 import modelo.Modelo;
@@ -68,7 +65,8 @@ public class VentanaEstadisticas extends javax.swing.JFrame {
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cuadroE.png"))); // NOI18N
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 320, -1, -1));
 
-        volver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/volver.png"))); // NOI18N
+        volver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/volver2.png"))); // NOI18N
+        volver.setBorder(null);
         volver.setContentAreaFilled(false);
         volver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -97,7 +95,10 @@ public class VentanaEstadisticas extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    /*
+    * Metodo de respuesta de click al boton Jugar
+    */
     private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
         VentanaInicio ventanaInicio = new VentanaInicio();
         ventanaInicio.setVisible(true);

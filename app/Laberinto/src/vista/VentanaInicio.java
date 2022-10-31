@@ -1,29 +1,21 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Nombre del paquete: vista
  */
 package vista;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
-import javax.swing.JDialog;
+//Inclusion de librerias y clases
 import modelo.Modelo;
-
 
 /**
  *
- * @author asmal
+ * @author Alex Sánchez Céspedes
  */
 public class VentanaInicio extends javax.swing.JFrame {
     Modelo modelo = new Modelo();
-    /**
-     * Creates new form VentanaInicio
-     */
     
     public VentanaInicio() {
         initComponents();
-        this.setExtendedState(this.MAXIMIZED_BOTH);
-        
+        this.setExtendedState(VentanaInicio.MAXIMIZED_BOTH);
     }
 
     /**
@@ -55,18 +47,17 @@ public class VentanaInicio extends javax.swing.JFrame {
         jPanel1.setPreferredSize(new java.awt.Dimension(1920, 1080));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/play.png"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/play2.png"))); // NOI18N
         jButton1.setBorder(null);
         jButton1.setBorderPainted(false);
         jButton1.setContentAreaFilled(false);
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton1.setDisabledIcon(null);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 710, -1, -1));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 720, -1, -1));
         jButton1.getAccessibleContext().setAccessibleName("btnJugar");
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -76,7 +67,7 @@ public class VentanaInicio extends javax.swing.JFrame {
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/ALEXUSCR3.png"))); // NOI18N
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1810, 960, 100, 120));
 
-        btnEstadisticas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/estadisticas.png"))); // NOI18N
+        btnEstadisticas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/estadisticas2.png"))); // NOI18N
         btnEstadisticas.setBorder(null);
         btnEstadisticas.setBorderPainted(false);
         btnEstadisticas.setContentAreaFilled(false);
@@ -86,9 +77,9 @@ public class VentanaInicio extends javax.swing.JFrame {
                 btnEstadisticasActionPerformed(evt);
             }
         });
-        jPanel1.add(btnEstadisticas, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 810, -1, -1));
+        jPanel1.add(btnEstadisticas, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 810, -1, -1));
 
-        salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/salir.png"))); // NOI18N
+        salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/salir2.png"))); // NOI18N
         salir.setBorder(null);
         salir.setBorderPainted(false);
         salir.setContentAreaFilled(false);
@@ -98,7 +89,7 @@ public class VentanaInicio extends javax.swing.JFrame {
                 salirActionPerformed(evt);
             }
         });
-        jPanel1.add(salir, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 900, -1, -1));
+        jPanel1.add(salir, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 900, -1, -1));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fondo5.jpg"))); // NOI18N
@@ -122,23 +113,30 @@ public class VentanaInicio extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    /*
+    * Metodo de respuesta de click al boton Jugar
+    */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         VentanaUbicacionArchivo venta = new VentanaUbicacionArchivo(modelo);
         venta.setVisible(true);
         venta.setLocationRelativeTo(null);
         this.dispose();
-        
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    
+    /*
+    * Metodo de respuesta de click al boton Estadisticas
+    */
     private void btnEstadisticasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstadisticasActionPerformed
         VentanaEstadisticas ventanaEstadisticas = new VentanaEstadisticas(modelo);
         ventanaEstadisticas.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnEstadisticasActionPerformed
-
+    
+    /*
+    * Metodo de respuesta de click al boton Salir
+    */
     private void salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirActionPerformed
-        
         this.dispose();
     }//GEN-LAST:event_salirActionPerformed
 

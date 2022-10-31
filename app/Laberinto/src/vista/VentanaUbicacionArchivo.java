@@ -1,17 +1,13 @@
-
+/*
+ * Nombre del paquete: vista
+ */
 package vista;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Map;
-import javax.swing.JDialog;
+//Inclusion de librerias y clases
+import java.io.File;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import modelo.Modelo;
-import org.jpl7.Atom;
-import org.jpl7.Query;
-import org.jpl7.Term;
-import org.jpl7.Variable;
 
 /**
  *
@@ -19,11 +15,9 @@ import org.jpl7.Variable;
  */
 public class VentanaUbicacionArchivo extends javax.swing.JFrame {
     Modelo pModelo;
-    /**
-     * Constructor de la clase VentasnaUbicacionArchivo
-     * @param modelo
-     */
     public JFrame ventanaAnterior;
+    String direccion;
+    
     public VentanaUbicacionArchivo(Modelo modelo) {
         pModelo = modelo;
         initComponents();
@@ -40,13 +34,16 @@ public class VentanaUbicacionArchivo extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         inputArchivo = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
         nombreJug = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         volver = new javax.swing.JButton();
+        jugar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -63,38 +60,32 @@ public class VentanaUbicacionArchivo extends javax.swing.JFrame {
         jPanel1.setPreferredSize(new java.awt.Dimension(1920, 1080));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        inputArchivo.setBackground(new java.awt.Color(46, 60, 60));
-        inputArchivo.setFont(new java.awt.Font("Calisto MT", 1, 12)); // NOI18N
+        inputArchivo.setEditable(false);
+        inputArchivo.setBackground(new java.awt.Color(27, 20, 100));
+        inputArchivo.setFont(new java.awt.Font("Calisto MT", 1, 10)); // NOI18N
         inputArchivo.setForeground(new java.awt.Color(255, 255, 255));
-        inputArchivo.setBorder(javax.swing.BorderFactory.createEtchedBorder(null, java.awt.Color.white));
+        inputArchivo.setBorder(null);
         inputArchivo.setCaretColor(new java.awt.Color(255, 255, 255));
         inputArchivo.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        inputArchivo.setEnabled(false);
+        inputArchivo.setSelectionColor(new java.awt.Color(255, 255, 255));
         inputArchivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 inputArchivoActionPerformed(evt);
             }
         });
-        jPanel1.add(inputArchivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 650, 480, 50));
+        jPanel1.add(inputArchivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 620, 380, 50));
         inputArchivo.getAccessibleContext().setAccessibleName("inputArchivo");
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/buscar2.png"))); // NOI18N
-        jButton1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 102, 102), new java.awt.Color(0, 0, 0), new java.awt.Color(0, 255, 255), new java.awt.Color(0, 153, 153)));
-        jButton1.setContentAreaFilled(false);
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 640, -1, -1));
-
-        nombreJug.setBackground(new java.awt.Color(46, 60, 60));
+        nombreJug.setBackground(new java.awt.Color(27, 20, 100));
         nombreJug.setFont(new java.awt.Font("Calisto MT", 1, 24)); // NOI18N
         nombreJug.setForeground(new java.awt.Color(255, 255, 255));
         nombreJug.setAutoscrolls(false);
-        nombreJug.setBorder(javax.swing.BorderFactory.createEtchedBorder(null, java.awt.Color.white));
+        nombreJug.setBorder(null);
+        nombreJug.setCaretColor(new java.awt.Color(255, 255, 255));
         nombreJug.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        jPanel1.add(nombreJug, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 520, 480, 50));
+        nombreJug.setSelectionColor(new java.awt.Color(255, 255, 255));
+        jPanel1.add(nombreJug, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 520, 380, 50));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/bichito.png"))); // NOI18N
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 890, 100, 120));
@@ -102,22 +93,49 @@ public class VentanaUbicacionArchivo extends javax.swing.JFrame {
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/meta$.png"))); // NOI18N
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1240, 900, -1, -1));
 
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/buscar3.png"))); // NOI18N
+        jButton1.setBorder(null);
+        jButton1.setContentAreaFilled(false);
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 603, -1, 80));
+
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/titulo2.png"))); // NOI18N
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 200, -1, -1));
 
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/nombreJug.png"))); // NOI18N
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 500, -1, -1));
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/nombreJug2.png"))); // NOI18N
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 500, -1, 90));
 
-        volver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/volver.png"))); // NOI18N
-        volver.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 153, 153), new java.awt.Color(51, 51, 51), new java.awt.Color(0, 255, 255), new java.awt.Color(0, 153, 153)));
+        volver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/volver2.png"))); // NOI18N
+        volver.setBorder(null);
         volver.setContentAreaFilled(false);
         volver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 volverActionPerformed(evt);
             }
         });
-        jPanel1.add(volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 920, 180, 70));
+        jPanel1.add(volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 920, 230, 70));
+
+        jugar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/play2.png"))); // NOI18N
+        jugar.setBorder(null);
+        jugar.setContentAreaFilled(false);
+        jugar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jugarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jugar, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 920, -1, -1));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/field.png"))); // NOI18N
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 600, -1, 90));
+
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/field.png"))); // NOI18N
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 510, -1, 70));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fondo5.jpg"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -139,40 +157,69 @@ public class VentanaUbicacionArchivo extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    /*
+    * Metodo de respuesta de click al boton Jugar
+    */
     private void inputArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputArchivoActionPerformed
        inputArchivo.setText("");
     }//GEN-LAST:event_inputArchivoActionPerformed
-
+    
+    /*
+    * Metodo de respuesta de click al boton Jugar
+    */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        BuscarArchivo();
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new java.io.File("T:\\2022\\S2\\LENGUAJES DE PROGRAMACION\\PRY3\\Laberinto\\src"));
+        fileChooser.setSelectedFile(new java.io.File("T:\\2022\\S2\\LENGUAJES DE PROGRAMACION\\PRY3\\Laberinto\\src\\matriz.txt"));
+        int ventanaActiva = fileChooser.showOpenDialog(this);
+        
+        if (ventanaActiva == JFileChooser.APPROVE_OPTION) {
+            File fichero = fileChooser.getSelectedFile();
+            inputArchivo.setText(fichero.getAbsolutePath());
+            direccion = fichero.getAbsolutePath();
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    
+    /*
+    * Metodo de respuesta de click al boton Jugar
+    */
     private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
         VentanaInicio ventanaInicio = new VentanaInicio();
         ventanaInicio.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_volverActionPerformed
     
+    /*
+    * Metodo de respuesta de click al boton Jugar
+    */
+    private void jugarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jugarActionPerformed
+        BuscarArchivo();
+    }//GEN-LAST:event_jugarActionPerformed
+    
+    /*
+    * Metodo de respuesta de click al boton Jugar
+    */
     private void BuscarArchivo() {
-        String direccion = inputArchivo.getText();
         pModelo.BuscarArchivo(direccion);
         String nombre = nombreJug.getText();
         VentanaJuego juego = new VentanaJuego(pModelo, nombre);
         juego.setVisible(true);
         this.dispose();
-        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField inputArchivo;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton jugar;
     private javax.swing.JTextField nombreJug;
     private javax.swing.JButton volver;
     // End of variables declaration//GEN-END:variables

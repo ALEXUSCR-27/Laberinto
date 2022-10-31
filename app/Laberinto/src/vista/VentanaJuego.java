@@ -167,7 +167,7 @@ public class VentanaJuego extends javax.swing.JFrame implements KeyListener{
         posX = Integer.parseInt(resultados.get("X").toString());
         posY = Integer.parseInt(resultados.get("Y").toString());
         switch(e.getKeyCode()) {
-           case(38):
+           case(38): //UP
                Query movimientoUP = new Query("movimiento", new Term[]{listaValores[6]});
                System.out.println(movimientoUP.hasSolution());
                Query verificarUP = new Query("verificarPosicion");
@@ -202,7 +202,7 @@ public class VentanaJuego extends javax.swing.JFrame implements KeyListener{
                    }
                }
                break;
-           case(40):
+           case(40):  //DW
                Query movimientoDown = new Query("movimiento", new Term[]{listaValores[5]});
                System.out.println(movimientoDown.hasSolution());
                Query verificarDown = new Query("verificarPosicion");
@@ -233,7 +233,7 @@ public class VentanaJuego extends javax.swing.JFrame implements KeyListener{
                    }
                }
                break;
-            case(39):
+            case(39): //RG
                Query movimientoRG = new Query("movimiento", new Term[]{listaValores[3]});
                System.out.println(movimientoRG.hasSolution());
                Query verificarRG = new Query("verificarPosicion");
@@ -264,7 +264,7 @@ public class VentanaJuego extends javax.swing.JFrame implements KeyListener{
                    }
                }
                 break;
-            case(37):
+            case(37): //IZ
                 Query movimientoIZ = new Query("movimiento", new Term[]{listaValores[4]});
                 System.out.println(movimientoIZ.hasSolution());
                 Query verificarIZ = new Query("verificarPosicion");
@@ -303,6 +303,8 @@ public class VentanaJuego extends javax.swing.JFrame implements KeyListener{
     public void Reiniciar() {
         VentanaInicio nuevoJuego = new VentanaInicio();
         nuevoJuego.setVisible(true);
+        Query limpieza = new Query("limpieza");
+        System.out.println(limpieza.hasSolution());
         this.dispose();
     }
 }

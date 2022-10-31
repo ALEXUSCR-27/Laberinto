@@ -34,20 +34,19 @@ public class VentanaGane extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(500, 500));
 
         jPanel1.setPreferredSize(new java.awt.Dimension(500, 500));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        volverInicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/volver.png"))); // NOI18N
-        volverInicio.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 153, 153), new java.awt.Color(51, 51, 51), new java.awt.Color(0, 255, 255), new java.awt.Color(0, 153, 153)));
+        volverInicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/volver2.png"))); // NOI18N
+        volverInicio.setBorder(null);
         volverInicio.setContentAreaFilled(false);
         volverInicio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 volverInicioActionPerformed(evt);
             }
         });
-        jPanel1.add(volverInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 340, -1, -1));
+        jPanel1.add(volverInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(137, 340, 230, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ganaste.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));

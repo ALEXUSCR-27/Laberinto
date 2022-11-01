@@ -1,30 +1,23 @@
 /*
+ * Nombre del paquete: vista
  */
 package vista;
 
-import java.awt.Color;
-import java.awt.ComponentOrientation;
 import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
 import java.util.Map;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import javax.swing.border.Border;
 import modelo.Modelo;
 import org.jpl7.Atom;
 import org.jpl7.Query;
 import org.jpl7.Term;
 import org.jpl7.Variable;
-import org.netbeans.lib.awtextra.AbsoluteLayout;
 
 /**
  *
- * @author asmal
+ * @author Alex Sanchez Cespedes
  */
 public class VentanaJuego extends javax.swing.JFrame implements KeyListener{
     private Term[][] matrizMadre;
@@ -32,7 +25,6 @@ public class VentanaJuego extends javax.swing.JFrame implements KeyListener{
     int x;
     int y;
     Atom[] listaValores = {new Atom("i"), new Atom("x"), new Atom("f"), new Atom("ad"), new Atom("at"), new Atom("ab"), new Atom("ar"), new Atom("inter")};
-    ArrayList<JLabel> labelArray = new ArrayList<>();
     JLabel[][] matrizLabels;
     int posX;
     int posY;
@@ -57,17 +49,21 @@ public class VentanaJuego extends javax.swing.JFrame implements KeyListener{
     /**
      * Creates new form VentanaJuego
      * @param modelo
+     * @param nombre
      */
     public VentanaJuego(Modelo modelo, String nombre) {
         pModelo = modelo;
         pNombre = nombre;
         initComponents();
+        nombreL.setText(nombre);
         addKeyListener(this);
         this.setExtendedState(VentanaJuego.MAXIMIZED_BOTH);
         Dibujar();
-        Jugar();
     }
     
+    /*
+    * Metodo para realizar la presentacion grafica del laberinto
+    */
     public final void Dibujar() {
         matrizMadre = pModelo.GetMatrizMadre();
         x = pModelo.GetX();
@@ -95,8 +91,7 @@ public class VentanaJuego extends javax.swing.JFrame implements KeyListener{
         }
     }
     
-    public final void Jugar(){
-    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -107,7 +102,11 @@ public class VentanaJuego extends javax.swing.JFrame implements KeyListener{
     private void initComponents() {
 
         jPanel2 = new javax.swing.JPanel();
+        abandonar = new javax.swing.JButton();
+        reiniciar = new javax.swing.JButton();
         panelJuego = new javax.swing.JPanel();
+        nombreL = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -119,6 +118,40 @@ public class VentanaJuego extends javax.swing.JFrame implements KeyListener{
         jPanel2.setPreferredSize(new java.awt.Dimension(1920, 1100));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        abandonar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/abandonar.png"))); // NOI18N
+        abandonar.setToolTipText("");
+        abandonar.setBorder(null);
+        abandonar.setBorderPainted(false);
+        abandonar.setContentAreaFilled(false);
+        abandonar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        abandonar.setDoubleBuffered(true);
+        abandonar.setFocusPainted(false);
+        abandonar.setFocusable(false);
+        abandonar.setRequestFocusEnabled(false);
+        abandonar.setRolloverEnabled(false);
+        abandonar.setVerifyInputWhenFocusTarget(false);
+        abandonar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                abandonarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(abandonar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 240, 220, -1));
+
+        reiniciar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/reiniciar.png"))); // NOI18N
+        reiniciar.setBorder(null);
+        reiniciar.setBorderPainted(false);
+        reiniciar.setContentAreaFilled(false);
+        reiniciar.setFocusPainted(false);
+        reiniciar.setFocusable(false);
+        reiniciar.setRequestFocusEnabled(false);
+        reiniciar.setVerifyInputWhenFocusTarget(false);
+        reiniciar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reiniciarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(reiniciar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 330, -1, -1));
+
         panelJuego.setBackground(new java.awt.Color(0, 0, 0));
         panelJuego.setAlignmentX(0.0F);
         panelJuego.setAlignmentY(0.0F);
@@ -126,6 +159,19 @@ public class VentanaJuego extends javax.swing.JFrame implements KeyListener{
         panelJuego.setPreferredSize(new java.awt.Dimension(880, 970));
         panelJuego.setLayout(new java.awt.GridBagLayout());
         jPanel2.add(panelJuego, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 60, -1, -1));
+
+        nombreL.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
+        nombreL.setForeground(new java.awt.Color(255, 255, 255));
+        nombreL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        nombreL.setFocusable(false);
+        nombreL.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        nombreL.setRequestFocusEnabled(false);
+        nombreL.setVerifyInputWhenFocusTarget(false);
+        jPanel2.add(nombreL, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, 200, 70));
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/nombre.png"))); // NOI18N
+        jLabel3.setText("jLabel3");
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 60, 300, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fondo5.jpg"))); // NOI18N
         jLabel2.setPreferredSize(new java.awt.Dimension(1980, 1100));
@@ -144,20 +190,62 @@ public class VentanaJuego extends javax.swing.JFrame implements KeyListener{
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    /*
+    * Metodo de respuesta de click al boton abandonar
+    */
+    private void abandonarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abandonarActionPerformed
+        tipoFinalizacion = "abandono";
+        pModelo.RegistrarJugador(pNombre, String.valueOf(cantidadMovimientos), tipoFinalizacion);
+        pModelo.limpiar();
+        VentanaInicio ventanaInicio = new VentanaInicio();
+        ventanaInicio.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_abandonarActionPerformed
+    /*
+    * Metodo de respuesta de click al boton reiniciar
+    */
+    private void reiniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reiniciarActionPerformed
+       tipoFinalizacion = "abandono";
+        pModelo.RegistrarJugador(pNombre, String.valueOf(cantidadMovimientos), tipoFinalizacion);
+        pModelo.limpiar();
+        String direccion = pModelo.GetDireccion();
+        pModelo.BuscarArchivo(direccion);
+        VentanaJuego ventanaJuego = new VentanaJuego(pModelo, pNombre);
+        ventanaJuego.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_reiniciarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton abandonar;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel nombreL;
     private javax.swing.JPanel panelJuego;
+    private javax.swing.JButton reiniciar;
     // End of variables declaration//GEN-END:variables
+
+    /*
+    * Metodo que reinicia la partida de juego
+    */
+    public void Reiniciar() {
+        VentanaInicio nuevoJuego = new VentanaInicio();
+        nuevoJuego.setVisible(true);
+        Query limpieza = new Query("limpieza");
+        System.out.println(limpieza.hasSolution());
+        this.dispose();
+    }
 
     @Override
     public void keyTyped(KeyEvent e) {}
 
     @Override
     public void keyPressed(KeyEvent e) {}
-
+    
+    /*
+    * Metodo de respuesta para cada uno de los movimientos del jugador
+    */
     @Override
     public void keyReleased(KeyEvent e) {
         Variable X = new Variable("X");
@@ -298,13 +386,5 @@ public class VentanaJuego extends javax.swing.JFrame implements KeyListener{
             default:
                 break;
         } 
-    }
-    
-    public void Reiniciar() {
-        VentanaInicio nuevoJuego = new VentanaInicio();
-        nuevoJuego.setVisible(true);
-        Query limpieza = new Query("limpieza");
-        System.out.println(limpieza.hasSolution());
-        this.dispose();
     }
 }

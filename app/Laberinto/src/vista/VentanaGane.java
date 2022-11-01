@@ -1,19 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package vista;
 
 /**
  *
- * @author asmal
+ * @author Alex Sanchez Cespedes
  */
 public class VentanaGane extends javax.swing.JFrame {
-
+    VentanaJuego juegoAnterior;
     /**
      * Creates new form VentanaGane
+     * @param anterior
      */
-    VentanaJuego juegoAnterior;
+    
     public VentanaGane(VentanaJuego anterior) {
         initComponents();
         juegoAnterior = anterior;
@@ -40,7 +38,9 @@ public class VentanaGane extends javax.swing.JFrame {
 
         volverInicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/volver2.png"))); // NOI18N
         volverInicio.setBorder(null);
+        volverInicio.setBorderPainted(false);
         volverInicio.setContentAreaFilled(false);
+        volverInicio.setFocusPainted(false);
         volverInicio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 volverInicioActionPerformed(evt);
@@ -64,7 +64,9 @@ public class VentanaGane extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /*
+     * Metodo para volver a la ventana principal
+     */
     private void volverInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverInicioActionPerformed
        VentanaInicio jugar = new VentanaInicio();
        jugar.setVisible(true);

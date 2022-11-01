@@ -35,6 +35,7 @@ public class Modelo {
     Atom[] listaValores = {new Atom("i"), new Atom("x"), new Atom("f"), new Atom("ad"), new Atom("at"), new Atom("ab"), new Atom("ar"), new Atom("inter")};
     int x;
     int y;
+    String pDireccion;
     
     /*
     * Metodo para realizar el proceso de conectar con la logica del juego.
@@ -42,6 +43,13 @@ public class Modelo {
     public void ConectarPL() {
         Query conectar = new Query( "consult", new Term[] {new Atom("T:\\2022\\S2\\LENGUAJES DE PROGRAMACION\\PRY3\\Laberinto\\app\\main.pl")});
         System.out.println(conectar.hasSolution());
+        limpiar();
+    }
+    
+    /*
+    * Metodo para realizar el proceso de limpieza de la base de conocimiento de prolog.
+    */
+    public void limpiar() {
         Query limpieza = new Query("limpieza");
         System.out.println(limpieza.hasSolution());
     }
@@ -50,6 +58,7 @@ public class Modelo {
     * Metodo para realizar la busqueda y lectura de la matriz del laberinto
     */
     public void BuscarArchivo(String direccion) {
+        pDireccion = direccion;
         Query leerArchivo = new Query("leerArchivo", new Term[]{new Atom(direccion)});
         System.out.println(leerArchivo.hasSolution());
         Variable X = new Variable("X");
@@ -83,6 +92,8 @@ public class Modelo {
     * Metodo para obtener la posicion y
     */
     public int GetY() {return y;}
+    
+    public String GetDireccion() {return pDireccion;}
     
     /*
     * Metodo para obtener la matriz de la parte visual
@@ -194,6 +205,7 @@ public class Modelo {
             catch (org.xml.sax.SAXException saxe) {saxe.printStackTrace();}
         }
         catch (ParserConfigurationException pce) {pce.printStackTrace();}
+        if (msg=="") {msg = "Sin registro de jugadores"; return msg;}
         System.out.println(msg);
         return msg;
     }

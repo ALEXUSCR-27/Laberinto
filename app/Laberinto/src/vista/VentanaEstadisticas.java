@@ -1,18 +1,21 @@
-
+/*
+ * Nombre del paquete: vista
+ */
 package vista;
 
+//Inclusion de librerias y clases
 import modelo.Modelo;
 
 /**
  *
- * @author asmal
+ * @author Alex Sanchez Cespedes
  */
 public class VentanaEstadisticas extends javax.swing.JFrame {
-
+    Modelo pModelo;
     /**
      * Creates new form VentanaEstadisticas
+     * @param modelo
      */
-    Modelo pModelo;
     public VentanaEstadisticas(Modelo modelo) {
         initComponents();
         pModelo = modelo;
@@ -50,7 +53,7 @@ public class VentanaEstadisticas extends javax.swing.JFrame {
 
         datosJugadores.setBackground(new java.awt.Color(26, 37, 49));
         datosJugadores.setColumns(20);
-        datosJugadores.setFont(new java.awt.Font("Bodoni MT", 0, 28)); // NOI18N
+        datosJugadores.setFont(new java.awt.Font("Bodoni MT", 0, 24)); // NOI18N
         datosJugadores.setForeground(new java.awt.Color(255, 255, 255));
         datosJugadores.setLineWrap(true);
         datosJugadores.setRows(5);
@@ -60,14 +63,16 @@ public class VentanaEstadisticas extends javax.swing.JFrame {
         datosJugadores.setEnabled(false);
         jScrollPane1.setViewportView(datosJugadores);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 480, 370, 480));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 480, 390, 460));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cuadroE.png"))); // NOI18N
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 320, -1, -1));
 
         volver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/volver2.png"))); // NOI18N
         volver.setBorder(null);
+        volver.setBorderPainted(false);
         volver.setContentAreaFilled(false);
+        volver.setFocusPainted(false);
         volver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 volverActionPerformed(evt);
@@ -103,7 +108,6 @@ public class VentanaEstadisticas extends javax.swing.JFrame {
         VentanaInicio ventanaInicio = new VentanaInicio();
         ventanaInicio.setVisible(true);
         this.dispose();
-        
     }//GEN-LAST:event_volverActionPerformed
 
 

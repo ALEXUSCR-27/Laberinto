@@ -16,7 +16,7 @@ import modelo.Modelo;
 public class VentanaUbicacionArchivo extends javax.swing.JFrame {
     Modelo pModelo;
     public JFrame ventanaAnterior;
-    String direccion;
+    String direccion="S";
     
     public VentanaUbicacionArchivo(Modelo modelo) {
         pModelo = modelo;
@@ -95,8 +95,10 @@ public class VentanaUbicacionArchivo extends javax.swing.JFrame {
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/buscar3.png"))); // NOI18N
         jButton1.setBorder(null);
+        jButton1.setBorderPainted(false);
         jButton1.setContentAreaFilled(false);
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton1.setFocusPainted(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -113,7 +115,9 @@ public class VentanaUbicacionArchivo extends javax.swing.JFrame {
 
         volver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/volver2.png"))); // NOI18N
         volver.setBorder(null);
+        volver.setBorderPainted(false);
         volver.setContentAreaFilled(false);
+        volver.setFocusPainted(false);
         volver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 volverActionPerformed(evt);
@@ -123,7 +127,9 @@ public class VentanaUbicacionArchivo extends javax.swing.JFrame {
 
         jugar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/play2.png"))); // NOI18N
         jugar.setBorder(null);
+        jugar.setBorderPainted(false);
         jugar.setContentAreaFilled(false);
+        jugar.setFocusPainted(false);
         jugar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jugarActionPerformed(evt);
@@ -201,11 +207,13 @@ public class VentanaUbicacionArchivo extends javax.swing.JFrame {
     * Metodo de respuesta de click al boton Jugar
     */
     private void BuscarArchivo() {
-        pModelo.BuscarArchivo(direccion);
-        String nombre = nombreJug.getText();
-        VentanaJuego juego = new VentanaJuego(pModelo, nombre);
-        juego.setVisible(true);
-        this.dispose();
+        if (direccion!="") {
+            pModelo.BuscarArchivo(direccion);
+            String nombre = nombreJug.getText();
+            VentanaJuego juego = new VentanaJuego(pModelo, nombre);
+            juego.setVisible(true);
+            this.dispose();
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
